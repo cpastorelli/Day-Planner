@@ -1,10 +1,17 @@
+
 const saveBtn = document.querySelector('saveBtn');
+
 const currentDay = document.querySelector('#currentDay');
+
 const greeting = document.querySelector('.greeting');
+
 const numOfBlocks = 24;
-const time = "H mm A";
-// var amPM = "";
+//I have this include minutes incase I wish to expand this program to include 30 or 15 min increments
+const time = "H mm A"; 
+
 var counter = 0;
+
+var amPm = " AM";
 
 
 
@@ -41,43 +48,38 @@ if(rightNow[2] === "AM"){
 return rightNow;
 }
 
-// function incHour(thisHour){
-// if(thisHour > 12){
-//     thisHour -= 12;
-//     console.log("past 12")
-//     //I feel like I need to add AM/PM HEre
-//     }
-// // else if(thisHour === 12){
-// //     thisHour = 1;
-// // //? meh..
-// // }
-// // else{
-// //     thisHour++;
-// // }
-
-// }
-
-
+// Create a function to show the time for each time block
 function incHour() {
 
     var printHour;
 
     if(counter === 0) {
-        printHour = 12 + "AM";
+
+        printHour = 12 + amPm;
+        
         counter++;
     }else if(counter != 0 && counter < 12){
-        printHour = counter + "AM";
+
+        printHour = counter + amPm;
+
         counter++;
     } else if(counter >= 12 && counter <= 24){
+        
+        amPm = " PM";
+
         if (counter === 12){
-            printHour = counter + "PM";
+
+            printHour = counter + amPm;
+
             counter++;
         }else{
+
             printHour = counter - 12;
-            printHour += "PM";
+
+            printHour += amPm;
+
             counter++;
         }
-
     }
 
     return printHour;
@@ -85,52 +87,103 @@ function incHour() {
 
 
 
+function setPlannerState($divArea, timeArray, plannerHour){
+    
+    var planArr = plannerHour.split(" ");
+
+    planTime = Number(planArr[0]);
+
+    var modTime = Number(timeArray[0]);
+    
+    modTime = (modTime % 12);
+
+    if (timeArray[2] === "AM" && planArr[1] === "AM"){
+
+        if(modTime === planTime){
+            $divArea.addClass("present");
+        }
+
+        if(modTime < planTime && planTime != 12){
+            $divArea.addClass("future");
+        }
+
+        if(modTime > planTime || planTime == 12){
+            $divArea.addClass("past");
+        }
+    }else if (timeArray[2] === "PM" && planArr[1] === "PM") {
+
+        if(modTime === planTime){
+            $divArea.addClass("present");
+        }
+
+        if(modTime < planTime && planTime != 12){
+            $divArea.addClass("future");
+        }
+
+        if(modTime > planTime || planTime == 12){
+            $divArea.addClass("past");
+        }  
+
+    }else if (timeArray[2] === "AM" && planArr[1] === "PM"){
+        $divArea.addClass("future");
+    }else if (timeArray[2] === "PM" && planArr[1] === "AM"){
+        $divArea.addClass("past");
+    }
+
+
+
+
+}
+
+//     while (timeArrayp[0] !== theHour);
+// }
+
+
 // Function to make the blocks of time
 function createTimeBlock(timeblock) {
 
-var timeArr = getCurrentTime(time);
+    var timeArr = getCurrentTime(time);
 
-//var theHour = Number(timeArr[0]);
+    for(var i = 0; i < timeblock; i++){
 
-//var theMin = Number(timeArr[1]);
+        //var timeOutput = theHour + timeArr[2]
+        var showHour = incHour();
 
+        //make a new div block and assign the class row to it
+        $newTimeBlock = $("<div>").addClass("row"); 
 
-for(var i = 0; i < timeblock; i++){
+        //take the time from array[0] and set to a new variable
+        $timeText = $("<p>").text(showHour);
 
-    //var timeOutput = theHour + timeArr[2]
-    var showHour = incHour();
+        //append the timeText <p> to the NewCol
+        $newCol = $("<div>").addClass("col-2 align-middle").append($timeText);
 
-    console.log("timeOutput is :" + showHour);
-    
+        //create a textarea and set it to a larger area than the other sections
+        $newTextArea = $("<textarea>").addClass("col-8").text("");
 
-    //make a new div block and assign the class row to it
-    $newTimeBlock = $("<div>").addClass("row"); 
+        //create save button at the end of the row, and give it the saveBtn class
+        $newSaveBtn = $("<div>").addClass("saveBtn col-1");
 
-    //take the time from array[0] and set to a new variable
-    $timeText = $("<p>").text(showHour);
+        //append all the sections to the New Time Block
+        $newTimeBlock.append($newCol, $newTextArea, $newSaveBtn);
+        
+        //append all the previously appended blocks and put them in the container class in HTML
+        $(".container").append($newTimeBlock)
 
-    $newCol = $("<div>").addClass("col-2 align-middle").append($timeText);
-
-    $newTextArea = $("<textarea>").addClass("col-8").text("");
-
-    $newSaveBtn = $("<div>").addClass("saveBtn col-1");
-
-    $newTimeBlock.append($newCol, $newTextArea, $newSaveBtn);
-    $(".container").append($newTimeBlock)
-
-    
-    
-
+        //call function to color in the rows according to how late it is in the day
+        setPlannerState($timeText, timeArr, showHour);
     }
 
 
 }
 
 
-
+// call function to show the current day's date
 todaysDate();
+
+//call function to create rest of day planner
 createTimeBlock(numOfBlocks);
-// loop to create hours for the day?
+
 
 
 
