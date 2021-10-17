@@ -1,6 +1,4 @@
 
-const saveBtn = document.querySelector('saveBtn');
-
 const currentDay = document.querySelector('#currentDay');
 
 const greeting = document.querySelector('.greeting');
@@ -45,6 +43,7 @@ if(rightNow[2] === "AM"){
     greeting.innerHTML = "Good Afternoon!";
 }
 
+// return rightNow array that has been split into 3 parts
 return rightNow;
 }
 
@@ -88,7 +87,7 @@ function incHour() {
 
 
 function setPlannerState($divArea, timeArray, plannerHour){
-    
+
     var planArr = plannerHour.split(" ");
 
     planTime = Number(planArr[0]);
@@ -129,14 +128,8 @@ function setPlannerState($divArea, timeArray, plannerHour){
     }else if (timeArray[2] === "PM" && planArr[1] === "AM"){
         $divArea.addClass("past");
     }
-
-
-
-
 }
 
-//     while (timeArrayp[0] !== theHour);
-// }
 
 
 // Function to make the blocks of time
@@ -159,10 +152,10 @@ function createTimeBlock(timeblock) {
         $newCol = $("<div>").addClass("col-2 align-middle").append($timeText);
 
         //create a textarea and set it to a larger area than the other sections
-        $newTextArea = $("<textarea>").addClass("col-8").text("");
+        $newTextArea = $("<textarea>").addClass("col-8 text-input").text("");
 
         //create save button at the end of the row, and give it the saveBtn class
-        $newSaveBtn = $("<div>").addClass("saveBtn col-1");
+        $newSaveBtn = $("<button>").addClass("saveBtn col-1").attr("id", "todo-input");
 
         //append all the sections to the New Time Block
         $newTimeBlock.append($newCol, $newTextArea, $newSaveBtn);
@@ -171,10 +164,8 @@ function createTimeBlock(timeblock) {
         $(".container").append($newTimeBlock)
 
         //call function to color in the rows according to how late it is in the day
-        setPlannerState($timeText, timeArr, showHour);
+        setPlannerState($newTextArea, timeArr, showHour);
     }
-
-
 }
 
 
@@ -184,6 +175,22 @@ todaysDate();
 //call function to create rest of day planner
 createTimeBlock(numOfBlocks);
 
+
+
+
+
+function saveMe (){
+
+    localStorage.setItem("ToDo", "DidThisWOrk");
+    $(".saveBtn").click(function(){
+        if(window.localStorage){
+            localStorage.setItem("todo-item", $('#todo-input').val());
+        }
+    })
+}
+
+var saveBtn = document.querySelector(".saveBtn");
+saveBtn.addEventListener('click', saveMe);
 
 
 
