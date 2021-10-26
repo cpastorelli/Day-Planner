@@ -166,6 +166,21 @@ function createTimeBlock(timeblock) {
         //call function to color in the rows according to how late it is in the day
         setPlannerState($newTextArea, timeArr, showHour);
     }
+
+
+
+
+    
+    // const timeBlockParent = document.getElementsByClassName("row");
+    // console.log(timeBlockParent);
+    // const buttons = document.querySelectorAll("button"); 
+    // //const txtInput = document.querySelectorAll("textarea");
+
+    // for (var i = 0; i <buttons.length; i++){
+    //     buttons[i].onclick = saveMe;
+    // }
+    
+   
 }
 
 
@@ -177,20 +192,25 @@ createTimeBlock(numOfBlocks);
 
 
 
+    
+    //var txtInput = timeBlockParent.textarea.value;
+    // localStorage.setItem("ToDo", txtInput);
+$(".saveBtn").click(function(){
+
+    
+
+    if(window.localStorage){
+        const myObj = document.querySelector("textarea").value;
+        console.log(myObj);
+        localStorage.setItem("todo-item", JSON.stringify(myObj));
+    }
+})
 
 
-function saveMe (){
 
-    localStorage.setItem("ToDo", "DidThisWOrk");
-    $(".saveBtn").click(function(){
-        if(window.localStorage){
-            localStorage.setItem("todo-item", $('#todo-input').val());
-        }
-    })
-}
+const buttons = document.querySelectorAll("button"); 
 
-var saveBtn = document.querySelector(".saveBtn");
-saveBtn.addEventListener('click', saveMe);
-
+//buttons.addEventListener("click", saveMe);
+// document.getElementsByTagName("button").addEventListener("click", saveMe);
 
 

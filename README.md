@@ -17,6 +17,7 @@ This project was to get into the practice of understanding moment.js and jQuery 
 - jQuery
 - Visual Studio Code
 - Coffee
+- Patience
 
 ## Contact:
 project link: (https://cpastorelli.github.io/day-planner/)
