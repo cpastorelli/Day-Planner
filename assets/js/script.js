@@ -7,8 +7,8 @@ const numOfBlocks = 24;
 const time = "H mm A"; 
 var counter = 0;
 var amPm = " AM";
-var eventItems = [];
-var singleEvent = {};
+var eventTimes = [];
+var eventTitles = [];
 
 // call function to show the current day's date
 todaysDate();
@@ -41,7 +41,6 @@ function createTimeBlock(timeblock) {
         //create a textarea and set it to a larger area than the other sections
         $newTextArea = $("<textarea>").addClass("col-8 text-input").text("");
         $newTextArea.addClass("eventItem");
-        
 
         //create save button at the end of the row, and give it the saveBtn class
         $newSaveBtn = $("<button>").addClass("saveBtn col-1");
@@ -54,15 +53,6 @@ function createTimeBlock(timeblock) {
         //call function to color in the rows according to how late it is in the day
         setPlannerState($newTextArea, timeArr, showHour);
     }
-
-    // const timeBlockParent = document.getElementsByClassName("row");
-    // console.log(timeBlockParent);
-    // const buttons = document.querySelectorAll("button"); 
-    // //const txtInput = document.querySelectorAll("textarea");
-
-    // for (var i = 0; i <buttons.length; i++){
-    //     buttons[i].onclick = saveMe;
-    // }
 }
 
 // Function to get the current time and color coordinate blocks of time
@@ -156,33 +146,21 @@ function setPlannerState($divArea, timeArray, plannerHour){
     }
 }
 
-
-
-
-
-//var txtInput = timeBlockParent.textarea.value;
-// localStorage.setItem("ToDo", txtInput);
 $(".saveBtn").click( function saveInput(event){
     event.preventDefault();
-    console.log("Save button was clicked. ")
 
     var eventTitle = event.currentTarget.parentNode.children[1].value;
-
     var eventTime = event.currentTarget.parentNode.children[0].innerText;
-    singleEvent.eventTime = eventTime;
-    singleEvent.eventTitle = eventTitle;
-    console.log(singleEvent);
 
-    
     if(window.localStorage){
+        eventTimes.push(eventTime);
+        eventTitles.push(eventTitle);
+
+        localStorage.setItem("EventName", JSON.stringify(eventTitles));
+        localStorage.setItem("EventTime", JSON.stringify(eventTimes));
         
-        eventItems.push(singleEvent);
-        console.log(eventItems);
-        localStorage.setItem("EventScheduled", JSON.stringify(eventItems));
     }
 })
 
-//buttons.addEventListener("click", saveMe);
-// document.getElementsByTagName("button").addEventListener("click", saveMe);
 
 
