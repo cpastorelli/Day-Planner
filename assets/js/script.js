@@ -7,17 +7,26 @@ const numOfBlocks = 24;
 const time = "H mm A"; 
 var counter = 0;
 var amPm = " AM";
+var eventItems = [];
+var singleEvent = {};
 
 // call function to show the current day's date
 todaysDate();
 //call function to create rest of day planner
 createTimeBlock(numOfBlocks);
 
+//make functionshow current day with moment js
+function todaysDate() {
+    //Create a moment object and set it to Weekday, Month date format  
+    var now = moment().format("dddd, MMM Do");
+    //Show current day in currentDay ID
+    currentDay.innerHTML = now;
+}
+
 // Function to make the blocks of time
 function createTimeBlock(timeblock) {
-
     var timeArr = getCurrentTime(time);
-    console.log("timeArray: " + timeArr);
+
     for(var i = 0; i < timeblock; i++){
 
         //var timeOutput = theHour + timeArr[2]
@@ -31,10 +40,11 @@ function createTimeBlock(timeblock) {
 
         //create a textarea and set it to a larger area than the other sections
         $newTextArea = $("<textarea>").addClass("col-8 text-input").text("");
-        $newTextArea.attr("id","text-input");
+        $newTextArea.addClass("eventItem");
+        
 
         //create save button at the end of the row, and give it the saveBtn class
-        $newSaveBtn = $("<button>").addClass("saveBtn col-1").attr("id", "todo-input");
+        $newSaveBtn = $("<button>").addClass("saveBtn col-1");
         $newSaveIcon = $("<img>").attr("src","./assets/images/save.png");
         $newSaveBtn.append($newSaveIcon);
         //append all the sections to the New Time Block
@@ -53,14 +63,6 @@ function createTimeBlock(timeblock) {
     // for (var i = 0; i <buttons.length; i++){
     //     buttons[i].onclick = saveMe;
     // }
-}
-
-//make functionshow current day with moment js
-function todaysDate() {
-    //Create a moment object and set it to Weekday, Month date format  
-    var now = moment().format("dddd, MMM Do");
-    //Show current day in currentDay ID
-    currentDay.innerHTML = now;
 }
 
 // Function to get the current time and color coordinate blocks of time
@@ -160,17 +162,23 @@ function setPlannerState($divArea, timeArray, plannerHour){
 
 //var txtInput = timeBlockParent.textarea.value;
 // localStorage.setItem("ToDo", txtInput);
-$("button").click(function saveInput(event){
-    console.log("Save button was clicked. ")
+$(".saveBtn").click( function saveInput(event){
     event.preventDefault();
+    console.log("Save button was clicked. ")
+
+    var eventTitle = event.currentTarget.parentNode.children[1].value;
+
+    var eventTime = event.currentTarget.parentNode.children[0].innerText;
+    singleEvent.eventTime = eventTime;
+    singleEvent.eventTitle = eventTitle;
+    console.log(singleEvent);
+
     
-    var todoInput = $("#text-input").val();
-    console.log(todoInput);
-    if(todoInput)
     if(window.localStorage){
-        const myObj = document.querySelector("textarea").value;
-        console.log(myObj);
-        localStorage.setItem("todo-item", JSON.stringify(myObj));
+        
+        eventItems.push(singleEvent);
+        console.log(eventItems);
+        localStorage.setItem("EventScheduled", JSON.stringify(eventItems));
     }
 })
 
