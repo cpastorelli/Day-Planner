@@ -1,3 +1,9 @@
+
+header {
+  background-image: url("/assets/images/headerImg.jpg");
+  background-repeat:no-repeat;
+  background-size:contain;
+}
 /* Settings for body items */
 body {
   font-family: 'Open Sans', sans-serif;
@@ -19,6 +25,8 @@ img {
   width: 20px;
 }
 
+
+
 /* jumbotron class
 center text alignment
 transparent background
@@ -27,7 +35,6 @@ black text color
 and a border edge on the bottom that is solid black */
 .jumbotron {
   text-align: center;
-  background-color: transparent;
   color: black;
   border-radius: 0;
   border-bottom: 10px solid black;

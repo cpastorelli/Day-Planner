@@ -20,7 +20,7 @@ This project was to get into the practice of understanding moment.js and jQuery 
 - Patience
 
 ## Contact:
-project link: (https://cpastorelli.github.io/day-planner/)
+project link: (https://cpastorelli.github.io/Day-Planner/)
 
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -31,4 +31,5 @@ project link: (https://cpastorelli.github.io/day-planner/)
 - [Appending in jQuery](https://api.jquery.com/append/)
 - [BootStrap Grid Layouts](https://getbootstrap.com/docs/4.6/layout/grid/)
 - [Splitting Strings](https://www.javascripttutorial.net/javascript-string-split/)
+- [headerImage](Photo by Min An from Pexels)
 
